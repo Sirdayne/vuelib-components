@@ -1,0 +1,5 @@
+@for $steps from 0 through 40
+  @each $type-key in [m, p]
+    @each $side-key in [t, b, l, r, y, x, a]
+      .#{$type-key}#{$side-key}-#{$steps}
+        +indent($type-key, $side-key, $steps)

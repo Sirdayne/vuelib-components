@@ -1,0 +1,18 @@
+.vue-tooltip
+  max-width: 260px
+  padding: 16px
+  border-radius: 4px
+  background: #0c2a5d
+
+  &.vue-tooltip-hidden
+    transform: none !important
+    visibility: visible
+    opacity: 0
+
+  &[x-placement^=top]
+    margin-bottom: 4px
+
+    .tooltip-arrow
+      bottom: -8px
+      border-width: 8px 12px 0 12px
+      border-top-color: #0c2a5d

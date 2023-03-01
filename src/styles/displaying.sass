@@ -1,0 +1,24 @@
+.block
+  +block
+
+.inline-block
+  +inline-block
+
+.not-displayed
+  +not-displayed
+
+.row
+  +row
+
+.col
+  +col
+
+.row, .col
+
+  &.wrap
+    +wrap
+
+  @each $prop-key, $prop in $align-props
+    @each $type-key, $type in $align-types
+      &.#{$prop-key}-#{$type-key}
+        #{$prop}: $type

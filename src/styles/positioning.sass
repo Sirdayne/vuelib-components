@@ -1,0 +1,34 @@
+@each $position in $positions
+  .#{$position}
+    +position($position)
+
+@for $i from 1 through 20
+  .z-#{$i}
+    +z($i)
+
+.top
+  +top
+
+.bottom
+  +bottom
+
+.right
+  +right
+
+.left
+  +left
+
+.top-left
+  +top-left
+
+.top-right
+  +top-right
+
+.bottom-left
+  +bottom-left
+
+.bottom-right
+  +bottom-right
+
+.fullscreen
+  +fullscreen

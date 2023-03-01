@@ -1,0 +1,38 @@
+@each $case in $cases
+  .#{$case}
+    +case($case)
+
+@each $align in $aligns-h
+  .text-#{$align}
+    +text($align)
+
+@each $align in $aligns-v
+  .vertical-#{$align}
+    +vertical($align)
+
+.font-smaller
+  +font-smaller
+
+.font-small
+  +font-small
+
+.bold
+  +bold
+
+.nowrap
+  +nowrap
+
+.break-spaces
+  +break-spaces
+
+h1, .h1, h2, .h2, h3, .h3
+  +bold
+
+h1, .h1
+  +font-larger
+
+h2, .h2
+  +font-large
+
+h3, .h3
+  +font-normal

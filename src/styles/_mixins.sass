@@ -1,0 +1,333 @@
+/* positioning */
+
+$positions: relative, absolute, fixed
+
+=position($position: relative)
+  @if index($positions, $position)
+    position: $position
+
+=relative
+  +position(relative)
+
+=absolute
+  +position(absolute)
+
+=fixed
+  +position(fixed)
+
+=z($i)
+  z-index: $i
+
+=top($size: 0)
+  top: $size
+
+=bottom($size: 0)
+  bottom: $size
+
+=right($size: 0)
+  right: $size
+
+=left($size: 0)
+  left: $size
+
+=top-left($a: 0, $b: $a)
+  +top($a)
+  +left($b)
+
+=top-right($a: 0, $b: $a)
+  +top($a)
+  +right($b)
+
+=bottom-left($a: 0, $b: $a)
+  +bottom($a)
+  +left($b)
+
+=bottom-right($a: 0, $b: $a)
+  +bottom($a)
+  +right($b)
+
+=fullscreen
+  +fixed
+  +top-left
+  +bottom-right
+
+/* sizing */
+
+=border-box
+  box-sizing: border-box
+
+=full-width
+  width: 100%
+
+=full-height
+  height: 100%
+
+=cover
+  +full-width
+  +full-height
+
+=square($size)
+  width: $size
+  height: $size
+
+=circle($size: null)
+  border-radius: 50%
+  @if $size
+    +square($size)
+
+/* overflows */
+
+=no-overflow
+  overflow: hidden
+
+=scroll
+  overflow: auto
+
+=scroll-x
+  overflow: auto hidden
+
+=scroll-y
+  overflow: hidden auto
+
+/* indenting */
+
+$indent-types: (m: margin, p: padding)
+$indent-sides: (t: top, b: bottom, l: left, r: right)
+$indent-sides-extra: (y: [t, b], x: [l, r])
+
+@function get-indent-type($key)
+  @return map-get($indent-types, $key)
+
+@function get-indent-side($key)
+  @return map-get($indent-sides, $key)
+
+@function get-indent-prop($type, $side)
+  @return #{$type}-#{$side}
+
+@function get-indent-side-extra($key)
+  @return map-get($indent-sides-extra, $key)
+
+=indent($type-key, $side-key, $steps)
+  $type: get-indent-type($type-key)
+  $size: if($steps == auto, auto, #{$steps * 6}px)
+  @if $side-key == a
+    #{$type}: $size
+  @else
+    $side: get-indent-side($side-key)
+    @if $type
+      @if $side
+        $prop: get-indent-prop($type, $side)
+        #{$prop}: $size
+      @else
+        $keys: get-indent-side-extra($side-key)
+        @if $keys
+          @each $key in $keys
+            $side: get-indent-side($key)
+            $prop: get-indent-prop($type, $side)
+            #{$prop}: $size
+
+=ma($steps: auto)
+  +indent(m, a, $steps)
+
+=my($steps: auto)
+  +indent(m, y, $steps)
+
+=mx($steps: auto)
+  +indent(m, x, $steps)
+
+=mt($steps: auto)
+  +indent(m, t, $steps)
+
+=mb($steps: auto)
+  +indent(m, b, $steps)
+
+=ml($steps: auto)
+  +indent(m, l, $steps)
+
+=mr($steps: auto)
+  +indent(m, r, $steps)
+
+=pa($steps)
+  +indent(p, a, $steps)
+
+=py($steps)
+  +indent(p, y, $steps)
+
+=px($steps)
+  +indent(p, x, $steps)
+
+=pt($steps)
+  +indent(p, t, $steps)
+
+=pb($steps)
+  +indent(p, b, $steps)
+
+=pl($steps)
+  +indent(p, l, $steps)
+
+=pr($steps)
+  +indent(p, r, $steps)
+
+/* displaying */
+
+=not-displayed
+  display: none
+
+=block
+  display: block
+
+=inline-block
+  display: inline-block
+
+$align-props: (justify: justify-content, align: align-items)
+$align-types: (start: flex-start, center: center, end: flex-end)
+
+=row
+  display: flex
+
+=col
+  display: flex
+  flex-direction: column
+
+=wrap
+  flex-wrap: wrap
+
+=align($type-key)
+  $type: map-get($align-types, $type-key)
+  @if $type
+    align-items: $type
+
+=justify($type-key)
+  $type: map-get($align-types, $type-key)
+  @if $type
+    justify-content: $type
+
+/* colors */
+
+$colors: []
+
+@function get-color($color)
+  @return if(index($colors, $color), var(--#{$color}), $color)
+
+=color($color: inherit)
+  color: get-color($color)
+
+=bg($color: inherit)
+  background: get-color($color)
+
+=no-bg
+  background: none
+
+/* borders */
+
+=border($width: 1px, $color: null, $radius: null)
+  @if $color
+    border: $width solid get-color($color)
+  @else
+    border-width: $width
+    border-style: solid
+  @if $radius
+    border-radius: $radius
+
+=no-border
+  border: none
+
+/* typography */
+
+$cases: uppercase, lowercase, capitalize
+$aligns-h: left, center, right
+$aligns-v: top, middle, bottom
+
+=case($case)
+  @if index($cases, $case)
+    text-transform: $case
+
+=uppercase
+  +case(uppercase)
+
+=lowercase
+  +case(lowercase)
+
+=capitalize
+  +case(capitalize)
+
+=text($align)
+  @if index($aligns-h, $align)
+    text-align: $align
+
+=vertical($align)
+  @if index($aligns-v, $align)
+    vertical-align: $align
+
+=font-size($size)
+  $fs: #{$size}px
+  $lh: 1.5
+  font-size: $fs
+  line-height: $lh
+
+  .ion-icon
+    font-size: #{$size * $lh}px
+
+=font-smaller
+  +font-size(12)
+
+=font-small
+  +font-size(14)
+
+=font-normal
+  +font-size(16)
+
+=font-large
+  +font-size(20)
+
+=font-larger
+  +font-size(32)
+
+=bold
+  font-weight: 600
+
+=nowrap
+  white-space: nowrap
+
+=break-spaces
+  white-space: break-spaces
+
+=ellipsis
+  text-overflow: ellipsis
+  +nowrap
+  +no-overflow
+
+/* transitions */
+
+=smoothed($prop: all, $time: .2s)
+  transition: $prop $time
+
+/* cursors */
+
+$cursors: inherit, default, pointer, text
+
+=cursor($cursor: inherit)
+  @if index($cursors, $cursor)
+    cursor: $cursor
+
+/* extra */
+
+=visible
+  visibility: visible
+  opacity: 1
+
+=hidden
+  visibility: hidden
+  opacity: 0
+
+=no-select
+  user-select: none
+
+=no-events
+  pointer-events: none
+
+=no-filter
+  filter: none
+
+=no-shadow
+  box-shadow: none

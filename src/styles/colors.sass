@@ -1,0 +1,9 @@
+@each $color in $colors
+  .text-#{$color}
+    +color($color)
+
+  .bg-#{$color}
+    +bg($color)
+
+.no-bg
+  +no-bg

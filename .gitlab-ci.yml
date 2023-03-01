@@ -1,0 +1,24 @@
+build production:
+  environment: production
+  stage: build
+  image: node:10.15.0-stretch
+  script:
+    - npm install -g @vue/cli@latest
+    - npm install
+    - npm run storybook:build
+  artifacts:
+    paths:
+      - storybook-static/
+    expire_in: 1 hour
+  only:
+    - master
+
+deploy to production:
+  environment: production
+  image: python:latest
+  stage: deploy
+  script:
+    - pip install awscli
+    - aws s3 sync ./storybook-static s3://$VUE_APP_S3D_BUCKET
+  only:
+    - master
