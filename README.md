@@ -1,4 +1,4 @@
-# Nation.better Components
+# Vue Components
 
 ## Project setup
 
